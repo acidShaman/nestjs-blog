@@ -1,0 +1,9 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+mat-card {
+    width: 300px;
+    height: max-content;
+    margin: 3rem auto;
+}
