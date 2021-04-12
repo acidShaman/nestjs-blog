@@ -37,12 +37,21 @@ export class UserController {
 
 
     @Get()
-    findAll(
+    index(
         @Query('page') page: number = 1,
-        @Query('limit') limit: number = 10
+        @Query('limit') limit: number = 10,
+        @Query('username') username: string
         ): Observable<Pagination<User>> {
             limit = limit > 100 ? 100 : limit;
-            return this.userService.paginate({page, limit, route: 'http://localhost:3000/api/user'})
+
+            if (username) {
+                return this.userService.paginateFilterByUsername(
+                    {page, limit, route: 'http://localhost:3000/api/user'}, 
+                    {username}
+                )
+            } else {
+                return this.userService.paginate({page, limit, route: 'http://localhost:3000/api/user'})
+            }
     }
 
 

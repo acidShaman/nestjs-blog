@@ -4,7 +4,7 @@ import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginat
 import { from, Observable, pipe, throwError } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { AuthService } from 'src/auth/auth.service';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { UserEntity } from './entity/user.entity';
 import { User, UserRole } from './interface/user.interface';
 
@@ -61,10 +61,42 @@ export class UserService {
         )
     }
 
+    paginateFilterByUsername(options: IPaginationOptions, user: User): Observable<Pagination<User>> {
+        console.log('Paginate', user.username)
+        return from(this.userRepository.findAndCount({
+            skip: (+options.page - 1) * +options.limit || 0,
+            take: +options.limit || 10,
+            order: {id: "ASC"},
+            select: ['id', 'name', 'username', 'email', 'role'],
+            where: [
+                {username: Like(`%${user.username}%`)}
+            ]
+        })).pipe(
+            map(([users, totalUsers]) => {
+                const usersPageable: Pagination<User> = {
+                    items: users,
+                    links: {
+                        first: options.route + `?limit=${options.limit}`,
+                        previous: options.route + ``,
+                        next: options.route + `?limit=${options.limit}&page=${+options.page + 1}`,
+                        last: options.route + `?limit=${options.limit}&page=${Math.ceil(totalUsers / +options.limit)}`
+                    },
+                    meta: {
+                        currentPage: +options.page,
+                        itemCount: users.length,
+                        itemsPerPage: +options.limit,
+                        totalItems: totalUsers,
+                        totalPages: Math.ceil(totalUsers / +options.limit)
+                    }
+                };
+                return usersPageable
+            })
+        )
+    }
+
     findOne(id: number): Observable<User> {
         return from(this.userRepository.findOne(id)).pipe(
             map((user: User) => {
-                console.log(user);
                 const {password, ...result} = user;
                 return result;
             })
