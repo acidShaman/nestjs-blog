@@ -6,8 +6,6 @@ import { OverviewComponent } from './components/overview/overview.component';
 
 const routes: Routes = [
   {path: '', component: OverviewComponent, pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({

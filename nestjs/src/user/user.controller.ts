@@ -42,7 +42,7 @@ export class UserController {
         @Query('limit') limit: number = 10
         ): Observable<Pagination<User>> {
             limit = limit > 100 ? 100 : limit;
-            return this.userService.paginate({page, limit, route: 'http://localhost:3000/user'})
+            return this.userService.paginate({page, limit, route: 'http://localhost:3000/api/user'})
     }
 
 
