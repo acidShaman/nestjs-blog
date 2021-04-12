@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs'
-import { LoginForm } from '../interfaces/login.interface';
-import { RegisterForm } from '../interfaces/register.interface';
+import { LoginForm } from '../../interfaces/login.interface';
+import { RegisterForm } from '../../interfaces/register.interface';
 
 @Injectable({
   providedIn: 'root'
