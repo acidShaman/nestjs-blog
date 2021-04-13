@@ -62,9 +62,8 @@ export class UserService {
     }
 
     paginateFilterByUsername(options: IPaginationOptions, user: User): Observable<Pagination<User>> {
-        console.log('Paginate', user.username)
         return from(this.userRepository.findAndCount({
-            skip: (+options.page - 1) * +options.limit || 0,
+            skip: (+options.page === 0 ? 0 : +options.page ) * +options.limit,
             take: +options.limit || 10,
             order: {id: "ASC"},
             select: ['id', 'name', 'username', 'email', 'role'],

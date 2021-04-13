@@ -26,4 +26,19 @@ export class UserService {
       catchError(err => throwError(err))
     )
   }
+
+  paginateByUsername(page: number, size: number, username: string): Observable<UserData> {
+    let params = new HttpParams()
+
+    params = params.append('page', String(page))
+    params = params.append('limit', String(size))
+    params = params.append('username', username)
+
+    return this.http.get<UserData>('/api/user', {params}).pipe(
+      map((userData: UserData) => {
+        return userData;
+      }),
+      catchError(err => throwError(err))
+    )
+  }
 }

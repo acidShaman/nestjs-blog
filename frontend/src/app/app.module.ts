@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -13,11 +13,12 @@ import { LoginComponent } from './shared/components/login/login.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { UsersComponent } from './shared/components/users/users.component'
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { UsersComponent } from './shared/components/users/users.component'
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
     AppRoutingModule,
     MatToolbarModule,
     MatIconModule,
@@ -38,7 +41,6 @@ import { UsersComponent } from './shared/components/users/users.component'
     ReactiveFormsModule,
     MatInputModule,
     MatSelectModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule
   ],
